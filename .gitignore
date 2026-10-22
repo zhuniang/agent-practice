@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---- agent-practice (project-specific) ----
+# uv cache redirected into the project (the default uv cache dir is not writable here)
+.uv-cache/
+# sandbox ACL repair backups/reports (local machine state)
+.dsh-acl-recovery/
