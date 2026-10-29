@@ -2,7 +2,7 @@ import os
 import json
 from openai import OpenAI
 from tool import TOOLS
-def print_message(messages: list[dict]):
+def print_message(messages):
     """格式化打印单条消息,去除NULL"""
     if hasattr(messages,"model_dump"):
         data = messages.model_dump(exclude_none=True)
