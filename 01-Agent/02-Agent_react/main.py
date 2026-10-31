@@ -11,7 +11,7 @@ def main() -> None:
 
     print("=" * 60)
     print("ReAct Agent 示例")
-    print("可用工具：[]")
+    print(f"可用工具：[{tools}]")
     print("=" * 60)
     print("\n")
     print("=" * 60)

@@ -1,4 +1,4 @@
-from agent import Tool
+from .tools import Tool
 # history 每条为 (thought, action, action_input, observation)
 HistoryItem = tuple[str, str, str, str]
 

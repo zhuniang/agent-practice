@@ -1,8 +1,8 @@
 import os
 from typing import Callable
-from agent.config import load_env
+from ..config import load_env
 from openai import OpenAI
-from agent import print_messages,print_message
+from .log import print_messages,print_message
 
 _SYSTEM_PROMPT = (
     "You are a ReAct agent. Follow the requested format exactly. "
@@ -34,11 +34,11 @@ def create_deepseek_llm(
         )
     client = OpenAI(
         base_url=base_url,
-        api_key=api_key
+        api_key=key
     )
     def llm(prompt: str) -> str:
         messages = [
-            {"role": "system", "cotent": _SYSTEM_PROMPT},
+            {"role": "system", "content": _SYSTEM_PROMPT},
             {"role": "user", "content": prompt},
         ]
         print("\n====>>> LLM request \n")

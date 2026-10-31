@@ -1,6 +1,7 @@
 import json
 from typing import Callable
-from agent import Tool,build_prompt,parse_action
+from .tools import Tool
+from .prompt import build_prompt,parse_action
 # history 每条为 (thought, action, action_input, observation)
 HistoryItem = tuple[str, str, str, str]
 
