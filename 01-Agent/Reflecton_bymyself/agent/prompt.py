@@ -19,7 +19,7 @@ REFLECTOR_SYSTEM_PROMPT = (
     "以单行形式回复：\n"
     "Reflection: <给出的改进策略>"
 )
-def build_prompt(question: str, tools: dict[str, Tool], history: list) -> str:
+def build_prompt(question: str, tools: dict[str, Tool], history: list, reflections: list[str]) -> str:
     tools_name = '['+ ", ".join(tools.keys()) +']'
     tools_description = {t.name: t.description  for t in tools.values()}
     lines = [
@@ -40,6 +40,11 @@ def build_prompt(question: str, tools: dict[str, Tool], history: list) -> str:
         f"上下文：",
         ""
     ]
+    if reflections:
+        lines += ["", "Past reflections (strategy memory from failed attempts):"]
+        for i, r in enumerate(reflections, 1):
+            lines.append(f"{i}. {r}")
+    lines.append("")
     for step in history:
         lines += [
             f"Thought: {step['Thought']}",
@@ -81,9 +86,12 @@ def parse_evaluation(output: str) -> tuple[str, float, str]:
     for line in output.splitlines():
         if line.startswith("Success:"):
             val = line.split("Success:",1)[1].strip()
-            success = val in ("yes","是","成功")
+            success = val in ("yes","是","成功","true","True")
         if line.startswith("Score:"):
-            score = float(line.split("Score:",1)[1].strip())
+            try:
+                score = float(line.split("Score:", 1)[1].strip())
+            except ValueError:
+                score = 0.0
         if line.startswith("Feedback:"):
             feedback = line.split("Feedback:",1)[1].strip()
     score = max(0.0, min(1.0, score))

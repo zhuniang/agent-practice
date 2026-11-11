@@ -18,7 +18,7 @@ def reflection_loop(
     reflections = []
     for trial in range(max_reflection_trials+1):
 
-        output = react_loop(llm=llm, tools=tools, max_steps=max_react_trials,question=task)
+        output = react_loop(llm=llm, tools=tools, max_steps=max_react_trials,question=task, reflections=reflections)
         if verbose:
             print(f"React Output>> {output}")
         evaluator_res = evaluator(task=task, llm=llm, output=output)
@@ -43,5 +43,5 @@ def reflection_loop(
             print(f"This Reflection Output>> {reflection}")
         
 
-    return output or "Failed: max trials exceeded."
+    return "Failed: max trials exceeded."
     

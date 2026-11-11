@@ -6,13 +6,13 @@ import json
 # 一条历史记录：{"thought": str, "action": str, "action_input": str, "observation": str}
 HISTORY_SCHEMA = dict[str, str]
 
-def react_loop(question: str, llm: Callable[[str, str], str], tools: dict[str, Tool], max_steps: int = 6) -> str:
+def react_loop(question: str, llm: Callable[[str, str], str], tools: dict[str, Tool], reflections: list[str], max_steps: int = 6) -> str:
 
     history: list[HISTORY_SCHEMA] = []
 
     for i in range(1,max_steps+1):
         print(f" --- Step {i} --- ")
-        prompt = build_prompt(question=question, tools=tools, history=history)
+        prompt = build_prompt(question=question, tools=tools, history=history, reflections=reflections)
         content = llm(prompt, REACT_SYSTEM_PROMPT)
 
         for line in content.splitlines():

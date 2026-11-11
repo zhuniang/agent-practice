@@ -4,7 +4,7 @@ from agent import reflection_loop,build_tools_registry, create_llm
 def main():
     tools = build_tools_registry()
     llm = create_llm()
-    task = "请计算233*2333，并返回结果字符串长度"
+    task = "请计算 233*2333，并把结果按千分位格式返回长度"
     print("="*80)
     print(f"User>> {task}")
     print("="*80)
